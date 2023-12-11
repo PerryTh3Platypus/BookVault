@@ -1,3 +1,5 @@
 ### BookVault
 - library management app
-- the app is in very early development
+- the program is in very early development
+# notes
+- the program expects a database named BookVault
