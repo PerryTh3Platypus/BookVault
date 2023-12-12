@@ -44,8 +44,9 @@ public class DatabaseConnectorFrame extends JFrame implements ActionListener, Da
         gbc.insets = new Insets(3,3,3,3);
         gbc.anchor = GridBagConstraints.CENTER;
 
-        urlFieldLabel = new JLabel("Database URL: ");
+        urlFieldLabel = new JLabel("Database URL (skip this step. Atm it's using whatever is in persistence.xml): ");
         urlField = new JTextField();
+        urlField.setEditable(false);
 
         connectButton = new JButton("Connect");
         connectButton.setFocusable(false);
@@ -132,7 +133,7 @@ public class DatabaseConnectorFrame extends JFrame implements ActionListener, Da
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == connectButton){
-            dbConnector.setUrl(urlField.getText());
+            //dbConnector.setUrl(urlField.getText());
             dbConnector.setUser(databaseUserField.getText());
 
             // not ideal, but it'll work for now.

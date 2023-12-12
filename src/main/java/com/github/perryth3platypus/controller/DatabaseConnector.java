@@ -43,10 +43,23 @@ public class DatabaseConnector{ // should probably be singleton
 
         notifyStatusListeners("Attempting to connect to BookVault database");
 
-        entityManagerFactory = Persistence.createEntityManagerFactory("BookVaultPU", entityManagerFactoryProperties); // create an emf with persistence.xml static properties and emfp dynamic properties
+        // attempt connecting to the database
+        try {
+            entityManagerFactory = Persistence.createEntityManagerFactory("BookVaultPU", entityManagerFactoryProperties); // create an emf with persistence.xml static properties and emfp dynamic properties
+        }catch (Exception ex){
+            notifyStatusListeners("Cannot get a connection.");
+            notifyStatusListeners("JDBC might not be properly initialized, DB might be offline, or credentials are invalid");
+            notifyStatusListeners("Check STDERR for more information.");
+            ex.printStackTrace();
+            return;
+        }
+
         entityManagerFactoryProperties = new HashMap<>(); // hopefully the jvm garbage collector will destroy that password. Will need to change the way this is done later
 
-        if (entityManagerFactory.isOpen())
+
+        entityManager = entityManagerFactory.createEntityManager();
+
+        if (testConnection())
             notifyStatusListeners("Connected to BookVault database at " + entityManagerFactory.getProperties().get("hibernate.connection.url"));
         else{
             notifyStatusListeners("Failed to connect to BookVault database. Dumping connection properties\n" + entityManagerFactory.getProperties());
@@ -54,15 +67,19 @@ public class DatabaseConnector{ // should probably be singleton
             entityManagerFactory = null;
             return;
         }
-        entityManager = entityManagerFactory.createEntityManager();
-
-        //TESTING
-        Query query = entityManager.createNativeQuery("SELECT DATABASE()");
-        String dbName = (String) query.getSingleResult();
-
-        System.out.println("Connected to database: " + dbName);
 
         notifyStatusListeners("Connection established.");
+    }
+
+    public boolean testConnection(){
+        try {
+            Query query = entityManager.createNativeQuery("SELECT DATABASE()");
+            String dbName = (String) query.getSingleResult();
+            return dbName.equals("BookVault");
+        }catch(NullPointerException ex){
+            return false;
+        }
+
     }
 
     private void notifyStatusListeners(String message){
