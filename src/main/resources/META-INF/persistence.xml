@@ -5,7 +5,13 @@
 
     <persistence-unit name="BookVaultPU" transaction-type="RESOURCE_LOCAL">
         <!-- Entity classes -->
-        <class></class>
+        <class>com.github.perryth3platypus.model.Librarian</class>
+        <class>com.github.perryth3platypus.model.Book</class>
+        <class>com.github.perryth3platypus.model.Patron</class>
+        <class>com.github.perryth3platypus.model.InternalLocation</class>
+        <class>com.github.perryth3platypus.model.Series</class>
+        <class>com.github.perryth3platypus.model.Author</class>
+        <class>com.github.perryth3platypus.model.Borrow</class>
 
         <!-- Data source configuration -->
         <properties>
@@ -19,8 +25,10 @@
             <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect"/>
             <property name="hibernate.show_sql" value="true"/>
 
+
+            <property name="hibernate.format_sql" value="true"/>
             <!-- Automatic table creation/update (use 'update' cautiously in production) -->
-            <!--<property name="hibernate.hbm2ddl.auto" value="update"/> -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
     </persistence-unit>
 

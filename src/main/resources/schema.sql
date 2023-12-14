@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS books(
     imprint VARCHAR(100),
     publisher VARCHAR(100),
     place_of_publication VARCHAR(100),
-    language VARCHAR(20),
+    book_language VARCHAR(50),
     year_of_publication INT NOT NULL,
     isbn VARCHAR(13) NOT NULL,
     barcode VARCHAR(20) UNIQUE,
@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS books(
     notes TEXT,
     FOREIGN KEY(series) REFERENCES series(series_id),
     FOREIGN KEY(location_id) REFERENCES internal_locations(location_id)
+    FOREIGN KEY(current_holder) REFERENCES patrons(patron_id)
 );
 
 CREATE TABLE IF NOT EXISTS authors(
@@ -74,9 +75,9 @@ CREATE TABLE IF NOT EXISTS borrows(
     borrow_id INT PRIMARY KEY AUTO_INCREMENT,
     patron_id INT NOT NULL,
     book_id INT NOT NULL,
-    borrow_date TIMESTAMP DEFAULT NOW(),
-    due_date TIMESTAMP DEFAULT DATE_ADD(NOW(), INTERVAL 2 WEEK),
-    return_date TIMESTAMP,
+    borrow_date DATETIME DEFAULT NOW(),
+    due_date DATETIME DEFAULT DATE_ADD(NOW(), INTERVAL 2 WEEK),
+    return_date DATETIME,
     status ENUM('Borrowed', 'Returned') DEFAULT 'Borrowed',
     checked_out_by_librarian_id INT NOT NULL,
     checked_in_by_librarian_id INT NOT NULL,
