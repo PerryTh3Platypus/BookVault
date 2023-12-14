@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DatabaseConnectorFrame extends JFrame implements ActionListener, DatabaseConnectorStatusListener {
@@ -28,12 +29,17 @@ public class DatabaseConnectorFrame extends JFrame implements ActionListener, Da
     JScrollPane statusScrollPane; // adds a scrollbar to the status text area
     GridBagConstraints gbc;
 
+    /* All widgets that exist within this frame (except stuff like panels) are added to this list.
+    *  This can be useful if you want to do changes to all widgets at once, such as changing fonts. */
+    ArrayList<JComponent> swingWidgets;
+
     public DatabaseConnectorFrame(){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Connect to your database");
         monitorSize = Toolkit.getDefaultToolkit();
         this.setSize(monitorSize.getScreenSize().width / 2, monitorSize.getScreenSize().height / 4);
         this.setLocationRelativeTo(null); // make the window pop up in the middle of the sceren
+        swingWidgets = new ArrayList<>();
     }
 
 
@@ -45,20 +51,28 @@ public class DatabaseConnectorFrame extends JFrame implements ActionListener, Da
         gbc.anchor = GridBagConstraints.CENTER;
 
         urlFieldLabel = new JLabel("Database URL (skip this step. Atm it's using whatever is in persistence.xml): ");
+        swingWidgets.add(urlFieldLabel);
         urlField = new JTextField();
+        swingWidgets.add(urlField);
         urlField.setEditable(false);
 
         connectButton = new JButton("Connect");
+        swingWidgets.add(connectButton);
         connectButton.setFocusable(false);
 
         databaseUserLabel = new JLabel("User: ");
+        swingWidgets.add(databaseUserLabel);
         databasePasswordLabel = new JLabel("Password: ");
+        swingWidgets.add(databasePasswordLabel);
 
         databaseUserField = new JTextField();
+        swingWidgets.add(databaseUserLabel);
         databasePasswordField = new JPasswordField();
+        swingWidgets.add(databasePasswordField);
 
 
         status = new JTextArea();
+        swingWidgets.add(status);
         status.setEditable(false);
         status.setLineWrap(true);
         status.setBackground(mainPanel.getBackground());
