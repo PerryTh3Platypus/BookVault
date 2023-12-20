@@ -82,6 +82,10 @@ public class DatabaseConnector{ // should probably be singleton
 
     }
 
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
     private void notifyStatusListeners(String message){
         // notify observers that are subscribed
         for (DatabaseConnectorStatusListener dbConnListener : statusListeners)
