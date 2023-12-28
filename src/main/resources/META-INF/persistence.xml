@@ -10,7 +10,6 @@
         <class>com.github.perryth3platypus.model.Patron</class>
         <class>com.github.perryth3platypus.model.InternalLocation</class>
         <class>com.github.perryth3platypus.model.Series</class>
-        <class>com.github.perryth3platypus.model.Author</class>
         <class>com.github.perryth3platypus.model.Borrow</class>
 
         <!-- Data source configuration -->
