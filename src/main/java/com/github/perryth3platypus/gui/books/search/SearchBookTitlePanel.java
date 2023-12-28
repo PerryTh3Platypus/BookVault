@@ -3,13 +3,13 @@ package com.github.perryth3platypus.gui.books.search;
 import javax.swing.*;
 import java.awt.*;
 
-public class BooksSearchTitlePanel extends JPanel {
+public class SearchBookTitlePanel extends JPanel {
     /* This class exists because there seems to be an unwanted interaction with
     * search fields and resizing on the same column*/
     private JLabel searchLabel;
     private JTextField searchField;
 
-    public BooksSearchTitlePanel(){
+    public SearchBookTitlePanel(){
         searchLabel = new JLabel("Title: ");
         searchField = new JTextField();
 

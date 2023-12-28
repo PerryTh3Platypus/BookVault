@@ -6,13 +6,13 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class BooksSearchResultsPanel extends JPanel {
+public class SearchBookResultsPanel extends JPanel {
     private JTable resultsTable;
     private DefaultTableModel tableModel;
     private JScrollPane scrollPane;
 
 
-    public BooksSearchResultsPanel(){
+    public SearchBookResultsPanel(){
         resultsTable = new JTable();
         tableModel = new DefaultTableModel();
         tableModel.setColumnIdentifiers(BooksConstants.FIELDS);

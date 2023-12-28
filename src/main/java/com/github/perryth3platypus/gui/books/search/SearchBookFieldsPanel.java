@@ -5,7 +5,7 @@ import com.github.perryth3platypus.gui.books.BooksConstants;
 import javax.swing.*;
 import java.awt.*;
 
-public class BooksSearchFieldsPanel extends JPanel {
+public class SearchBookFieldsPanel extends JPanel {
     private JComboBox<String> searchComboBox1;
     private JTextField searchField1;
     private JComboBox<String> searchComboBox2;
@@ -13,7 +13,7 @@ public class BooksSearchFieldsPanel extends JPanel {
     private JComboBox<String> searchComboBox3;
     private JTextField searchField3;
 
-    public BooksSearchFieldsPanel(){
+    public SearchBookFieldsPanel(){
         this.setLayout(new GridBagLayout());
         init();
         addWidgetsToPanel();

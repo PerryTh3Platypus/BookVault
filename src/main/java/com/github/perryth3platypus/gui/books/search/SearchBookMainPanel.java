@@ -3,21 +3,21 @@ package com.github.perryth3platypus.gui.books.search;
 import javax.swing.*;
 import java.awt.*;
 
-public class BooksSearchMainPanel extends JPanel {
-    private BooksSearchTitlePanel booksSearchTitlePanel;
-    private BooksSearchFieldsPanel booksSearchFieldsPanel;
-    private BooksSearchResultsPanel booksSearchResultsPanel;
+public class SearchBookMainPanel extends JPanel {
+    private SearchBookTitlePanel searchBookTitlePanel;
+    private SearchBookFieldsPanel searchBookFieldsPanel;
+    private SearchBookResultsPanel searchBookResultsPanel;
 
-    public BooksSearchMainPanel(){
+    public SearchBookMainPanel(){
         this.setLayout(new GridBagLayout());
         init();
         addWidgetsToPanel();
     }
 
     public void init(){
-        booksSearchTitlePanel = new BooksSearchTitlePanel();
-        booksSearchFieldsPanel = new BooksSearchFieldsPanel();
-        booksSearchResultsPanel = new BooksSearchResultsPanel();
+        searchBookTitlePanel = new SearchBookTitlePanel();
+        searchBookFieldsPanel = new SearchBookFieldsPanel();
+        searchBookResultsPanel = new SearchBookResultsPanel();
     }
 
     public void addWidgetsToPanel(){
@@ -30,15 +30,15 @@ public class BooksSearchMainPanel extends JPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        this.add(booksSearchTitlePanel, gbc);
+        this.add(searchBookTitlePanel, gbc);
 
         gbc.gridy = 1;
-        this.add(booksSearchFieldsPanel, gbc);
+        this.add(searchBookFieldsPanel, gbc);
 
         gbc.weighty = 1.0d;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridy = 2;
-        this.add(booksSearchResultsPanel, gbc);
+        this.add(searchBookResultsPanel, gbc);
 
     }
 }
