@@ -17,6 +17,9 @@ public class Book {
     @Column(name = "title", nullable = false, length = 100)
     private String title;
 
+    @Column(name = "author", nullable = false)
+    private String author;
+
     @Column(name = "subject", length = 100)
     private String subject;
 
@@ -33,20 +36,20 @@ public class Book {
     @Column(name = "edition_number")
     private int editionNumber;
 
+    @Column(name = "country", length = 100)
+    private String country;
+
+    @Column(name = "book_language", length = 50)
+    private String bookLanguage;
+
+    @Column(name = "released_year", nullable = false)
+    private int releasedYear;
+
     @Column(name = "imprint", length = 100)
     private String imprint;
 
     @Column(name = "publisher", length = 100)
     private String publisher;
-
-    @Column(name = "place_of_publication", length = 100)
-    private String placeOfPublication;
-
-    @Column(name = "book_language", length = 50)
-    private String bookLanguage;
-
-    @Column(name = "year_of_publication", nullable = false)
-    private int yearOfPublication;
 
     @Column(name = "isbn", nullable = false, length = 13)
     private String isbn;
@@ -79,7 +82,163 @@ public class Book {
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 
-    @OneToMany
-    private List<Author> authors;
+    public String getTitle() {
+        return title;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public Series getSeries() {
+        return series;
+    }
+
+    public void setSeries(Series series) {
+        this.series = series;
+    }
+
+    public int getVolumeNumber() {
+        return volumeNumber;
+    }
+
+    public void setVolumeNumber(int volumeNumber) {
+        this.volumeNumber = volumeNumber;
+    }
+
+    public int getEditionNumber() {
+        return editionNumber;
+    }
+
+    public void setEditionNumber(int editionNumber) {
+        this.editionNumber = editionNumber;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getBookLanguage() {
+        return bookLanguage;
+    }
+
+    public void setBookLanguage(String bookLanguage) {
+        this.bookLanguage = bookLanguage;
+    }
+
+    public int getReleasedYear() {
+        return releasedYear;
+    }
+
+    public void setReleasedYear(int releasedYear) {
+        this.releasedYear = releasedYear;
+    }
+
+    public String getImprint() {
+        return imprint;
+    }
+
+    public void setImprint(String imprint) {
+        this.imprint = imprint;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
+    public String getAccessionNumber() {
+        return accessionNumber;
+    }
+
+    public void setAccessionNumber(String accessionNumber) {
+        this.accessionNumber = accessionNumber;
+    }
+
+    public InternalLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(InternalLocation location) {
+        this.location = location;
+    }
+
+    public LocalDateTime getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(LocalDateTime entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Patron getCurrentHolder() {
+        return currentHolder;
+    }
+
+    public void setCurrentHolder(Patron currentHolder) {
+        this.currentHolder = currentHolder;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }
