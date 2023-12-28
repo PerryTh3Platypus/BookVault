@@ -1,13 +1,13 @@
 package com.github.perryth3platypus.gui.books;
 
-import com.github.perryth3platypus.gui.books.search.BooksMainPanel;
+import com.github.perryth3platypus.gui.books.search.BooksSearchMainPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
 
 public class BooksTab extends JPanel {
-    private BooksMainPanel booksMainPanel;
+    private BooksSearchMainPanel booksSearchMainPanel;
     private JButton newBookButton;
     private JButton searchBookButton;
 
@@ -18,7 +18,7 @@ public class BooksTab extends JPanel {
         gbc.gridy = 0;
         gbc.weightx = 1.0d;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.add(new BooksMainPanel(), gbc);
+        this.add(new BooksSearchMainPanel(), gbc);
     }
 
 }

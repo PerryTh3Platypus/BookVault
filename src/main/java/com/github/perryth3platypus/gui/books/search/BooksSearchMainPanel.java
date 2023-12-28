@@ -3,12 +3,12 @@ package com.github.perryth3platypus.gui.books.search;
 import javax.swing.*;
 import java.awt.*;
 
-public class BooksMainPanel extends JPanel {
+public class BooksSearchMainPanel extends JPanel {
     private BooksSearchTitlePanel booksSearchTitlePanel;
     private BooksSearchFieldsPanel booksSearchFieldsPanel;
     private BooksSearchResultsPanel booksSearchResultsPanel;
 
-    public BooksMainPanel(){
+    public BooksSearchMainPanel(){
         this.setLayout(new GridBagLayout());
         init();
         addWidgetsToPanel();
