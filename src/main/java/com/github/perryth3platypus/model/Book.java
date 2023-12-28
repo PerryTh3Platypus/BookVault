@@ -31,10 +31,10 @@ public class Book {
     private Series series;
 
     @Column(name = "volume_number")
-    private int volumeNumber;
+    private String volumeNumber;
 
     @Column(name = "edition_number")
-    private int editionNumber;
+    private String editionNumber;
 
     @Column(name = "country", length = 100)
     private String country;
@@ -43,7 +43,7 @@ public class Book {
     private String bookLanguage;
 
     @Column(name = "released_year", nullable = false)
-    private int releasedYear;
+    private String releasedYear;
 
     @Column(name = "imprint", length = 100)
     private String imprint;
@@ -122,19 +122,19 @@ public class Book {
         this.series = series;
     }
 
-    public int getVolumeNumber() {
+    public String getVolumeNumber() {
         return volumeNumber;
     }
 
-    public void setVolumeNumber(int volumeNumber) {
+    public void setVolumeNumber(String volumeNumber) {
         this.volumeNumber = volumeNumber;
     }
 
-    public int getEditionNumber() {
+    public String getEditionNumber() {
         return editionNumber;
     }
 
-    public void setEditionNumber(int editionNumber) {
+    public void setEditionNumber(String editionNumber) {
         this.editionNumber = editionNumber;
     }
 
@@ -154,11 +154,11 @@ public class Book {
         this.bookLanguage = bookLanguage;
     }
 
-    public int getReleasedYear() {
+    public String getReleasedYear() {
         return releasedYear;
     }
 
-    public void setReleasedYear(int releasedYear) {
+    public void setReleasedYear(String releasedYear) {
         this.releasedYear = releasedYear;
     }
 
