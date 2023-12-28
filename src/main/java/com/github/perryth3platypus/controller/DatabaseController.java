@@ -1,9 +1,13 @@
 package com.github.perryth3platypus.controller;
 
+import com.github.perryth3platypus.gui.books.BooksConstants;
+import com.github.perryth3platypus.model.Book;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
 import java.util.List;
 
@@ -28,6 +32,18 @@ public class DatabaseController {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    public List<Book> loadBooks(String title, String searchField1, String searchTerm1, String searchField2, String searchTerm2, String searchField3, String searchTerm3){
+        //todo: update this method later
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Book> bookCriteriaQuery = criteriaBuilder.createQuery(Book.class);
+        Root<Book> bookRoot = bookCriteriaQuery.from(Book.class);
+
+        Predicate searchPredicate = criteriaBuilder.like(bookRoot.get(BooksConstants.ATTRIBUTE_MAP.get(searchField1)), "%" + searchTerm1.toLowerCase() + "%");
+        bookCriteriaQuery.where(searchPredicate);
+
+        return em.createQuery(bookCriteriaQuery).getResultList();
     }
 
     public boolean performCRUDOperation(Object object, CRUDOperation operation){
