@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class BooksConstants {
+    /*
+    * WARNING! If you change a name in FIELDS, make sure to change the key associated with it in ATTRIBUTE_MAP
+    * */
 
     private BooksConstants(){
         // don't instantiate this
