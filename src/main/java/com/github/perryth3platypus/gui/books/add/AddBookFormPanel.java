@@ -172,4 +172,148 @@ public class AddBookFormPanel extends JPanel {
             }
         }
     }
+
+    public ArrayList<JLabel> getLabels() {
+        return labels;
+    }
+
+    public ArrayList<JTextField> getTextFields() {
+        return textFields;
+    }
+
+    public JLabel getTitleLabel() {
+        return titleLabel;
+    }
+
+    public JTextField getTitleTextField() {
+        return titleTextField;
+    }
+
+    public JLabel getAuthorLabel() {
+        return authorLabel;
+    }
+
+    public JTextField getAuthorTextField() {
+        return authorTextField;
+    }
+
+    public JLabel getSubjectLabel() {
+        return subjectLabel;
+    }
+
+    public JTextField getSubjectTextField() {
+        return subjectTextField;
+    }
+
+    public JLabel getGenreLabel() {
+        return genreLabel;
+    }
+
+    public JTextField getGenreTextField() {
+        return genreTextField;
+    }
+
+    public JLabel getSeriesLabel() {
+        return seriesLabel;
+    }
+
+    public JTextField getSeriesTextField() {
+        return seriesTextField;
+    }
+
+    public JLabel getVolumeNumberLabel() {
+        return volumeNumberLabel;
+    }
+
+    public JTextField getVolumeNumberTextField() {
+        return volumeNumberTextField;
+    }
+
+    public JLabel getEditionNumberLabel() {
+        return editionNumberLabel;
+    }
+
+    public JTextField getEditionNumberTextField() {
+        return editionNumberTextField;
+    }
+
+    public JLabel getCountryLabel() {
+        return countryLabel;
+    }
+
+    public JTextField getCountryTextField() {
+        return countryTextField;
+    }
+
+    public JLabel getBookLanguageLabel() {
+        return bookLanguageLabel;
+    }
+
+    public JTextField getBookLanguageTextField() {
+        return bookLanguageTextField;
+    }
+
+    public JLabel getReleasedYearLabel() {
+        return releasedYearLabel;
+    }
+
+    public JTextField getReleasedYearTextField() {
+        return releasedYearTextField;
+    }
+
+    public JLabel getImprintLabel() {
+        return imprintLabel;
+    }
+
+    public JTextField getImprintTextField() {
+        return imprintTextField;
+    }
+
+    public JLabel getPublisherLabel() {
+        return publisherLabel;
+    }
+
+    public JTextField getPublisherTextField() {
+        return publisherTextField;
+    }
+
+    public JLabel getIsbnLabel() {
+        return isbnLabel;
+    }
+
+    public JTextField getIsbnTextField() {
+        return isbnTextField;
+    }
+
+    public JLabel getBarcodeLabel() {
+        return barcodeLabel;
+    }
+
+    public JTextField getBarcodeTextField() {
+        return barcodeTextField;
+    }
+
+    public JLabel getAccessionNumberLabel() {
+        return accessionNumberLabel;
+    }
+
+    public JTextField getAccessionNumberTextField() {
+        return accessionNumberTextField;
+    }
+
+    public JLabel getLocationLabel() {
+        return locationLabel;
+    }
+
+    public JTextField getLocationTextField() {
+        return locationTextField;
+    }
+
+    public JLabel getNotesLabel() {
+        return notesLabel;
+    }
+
+    public JTextField getNotesTextField() {
+        return notesTextField;
+    }
 }
