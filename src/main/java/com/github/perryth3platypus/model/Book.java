@@ -14,16 +14,16 @@ public class Book {
     @Column(name = "book_id")
     private long bookId;
 
-    @Column(name = "title", nullable = false, length = 100)
+    @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "author", nullable = false)
     private String author;
 
-    @Column(name = "subject", length = 100)
+    @Column(name = "subject")
     private String subject;
 
-    @Column(name = "genre", length = 30)
+    @Column(name = "genre")
     private String genre;
 
     @ManyToOne
@@ -36,28 +36,28 @@ public class Book {
     @Column(name = "edition_number")
     private String editionNumber;
 
-    @Column(name = "country", length = 100)
+    @Column(name = "country")
     private String country;
 
-    @Column(name = "book_language", length = 50)
+    @Column(name = "book_language")
     private String bookLanguage;
 
     @Column(name = "released_year", nullable = false)
     private String releasedYear;
 
-    @Column(name = "imprint", length = 100)
+    @Column(name = "imprint")
     private String imprint;
 
-    @Column(name = "publisher", length = 100)
+    @Column(name = "publisher")
     private String publisher;
 
     @Column(name = "isbn", nullable = false, length = 13)
     private String isbn;
 
-    @Column(name = "barcode", unique = true, length = 20)
+    @Column(name = "barcode")
     private String barcode;
 
-    @Column(name = "accession_number", unique = true, length = 20)
+    @Column(name = "accession_number", unique = true)
     private String accessionNumber;
 
     @OneToOne
