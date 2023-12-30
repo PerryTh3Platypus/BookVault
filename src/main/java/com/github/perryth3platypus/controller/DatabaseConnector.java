@@ -34,7 +34,7 @@ public class DatabaseConnector{ // should probably be singleton
         entityManagerFactoryProperties.put("javax.persistence.jdbc.password", password);
     }
 
-    public void start(){
+    public void connect(){
         if (entityManagerFactory != null) // close emf is there is one already open
             entityManagerFactory.close();
         if (entityManager != null) // close em if there is one already open
@@ -59,14 +59,14 @@ public class DatabaseConnector{ // should probably be singleton
 
         entityManager = entityManagerFactory.createEntityManager();
 
-        if (testConnection())
-            notifyStatusListeners("Connected to BookVault database at " + entityManagerFactory.getProperties().get("hibernate.connection.url"));
-        else{
-            notifyStatusListeners("Failed to connect to BookVault database. Dumping connection properties\n" + entityManagerFactory.getProperties());
-            entityManagerFactory.close();
-            entityManagerFactory = null;
-            return;
-        }
+//        if (testConnection())
+//            notifyStatusListeners("Connected to BookVault database at " + entityManagerFactory.getProperties().get("hibernate.connection.url"));
+//        else{
+//            notifyStatusListeners("Failed to connect to BookVault database. Dumping connection properties\n" + entityManagerFactory.getProperties());
+//            entityManagerFactory.close();
+//            entityManagerFactory = null;
+//            return;
+//        }
 
         notifyStatusListeners("Connection established.");
     }

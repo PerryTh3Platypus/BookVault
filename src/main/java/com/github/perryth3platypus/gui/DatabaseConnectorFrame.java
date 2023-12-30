@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class DatabaseConnectorFrame extends JFrame implements ActionListener, DatabaseConnectorStatusListener {
 
@@ -40,6 +39,7 @@ public class DatabaseConnectorFrame extends JFrame implements ActionListener, Da
         this.setSize(monitorSize.getScreenSize().width / 2, monitorSize.getScreenSize().height / 4);
         this.setLocationRelativeTo(null); // make the window pop up in the middle of the sceren
         swingWidgets = new ArrayList<>();
+        this.setAlwaysOnTop(true);
     }
 
 
@@ -154,8 +154,14 @@ public class DatabaseConnectorFrame extends JFrame implements ActionListener, Da
             dbConnector.setPassword(databasePasswordField.getText()); // this will need to get patched later.
 
 
-            dbConnector.start();
-            System.out.println("hello");
+            dbConnector.connect();
+            if (dbConnector.testConnection()) {
+                status.append("Connected to BookVault database successfully\n");
+                this.setVisible(false);
+            }
+            else{
+                status.append("Failed to connect to BookVault database. Invalid database name, invalid credentials, or can't connect to the server");
+            }
         }
     }
 
