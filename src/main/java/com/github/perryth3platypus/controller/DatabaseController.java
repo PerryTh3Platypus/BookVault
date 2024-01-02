@@ -15,19 +15,20 @@ public class DatabaseController {
     public enum CRUDOperation{
         CREATE, UPDATE, DELETE
     }
-    private EntityManager em;
 
-    public DatabaseController(EntityManager em){
-        this.em = em;
+    private DatabaseConnector dbConnector;
+
+    public DatabaseController(DatabaseConnector dbConnector){
+        this.dbConnector = dbConnector;
     }
 
     public <T> List<T> loadAllObjects(Class<T> type){
         // loads all objects of a type from the database to memory
         try {
-            CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+            CriteriaBuilder criteriaBuilder = dbConnector.getEntityManager().getCriteriaBuilder();
             CriteriaQuery<T> criteria = criteriaBuilder.createQuery(type);
             criteria.from(type);
-            return em.createQuery(criteria).getResultList();
+            return dbConnector.getEntityManager().createQuery(criteria).getResultList();
         } catch (Exception ex) { // todo: add more specific exception handling here
             ex.printStackTrace();
             return null;
@@ -36,24 +37,24 @@ public class DatabaseController {
 
     public List<Book> loadBooks(String title, String searchField1, String searchTerm1, String searchField2, String searchTerm2, String searchField3, String searchTerm3){
         //todo: update this method later
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaBuilder criteriaBuilder = dbConnector.getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Book> bookCriteriaQuery = criteriaBuilder.createQuery(Book.class);
         Root<Book> bookRoot = bookCriteriaQuery.from(Book.class);
 
         Predicate searchPredicate = criteriaBuilder.like(bookRoot.get(BooksConstants.ATTRIBUTE_MAP.get(searchField1)), "%" + searchTerm1.toLowerCase() + "%");
         bookCriteriaQuery.where(searchPredicate);
 
-        return em.createQuery(bookCriteriaQuery).getResultList();
+        return dbConnector.getEntityManager().createQuery(bookCriteriaQuery).getResultList();
     }
 
     public boolean performCRUDOperation(Object object, CRUDOperation operation){
-        EntityTransaction transaction = em.getTransaction();
+        EntityTransaction transaction = dbConnector.getEntityManager().getTransaction();
         try{
             transaction.begin();
             switch (operation){
-                case CREATE -> em.persist(object);
-                case UPDATE -> em.merge(object);
-                case DELETE -> em.remove(object);
+                case CREATE -> dbConnector.getEntityManager().persist(object);
+                case UPDATE -> dbConnector.getEntityManager().merge(object);
+                case DELETE -> dbConnector.getEntityManager().remove(object);
             }
             transaction.commit();
             return true;
@@ -64,5 +65,4 @@ public class DatabaseController {
             return false;
         }
     }
-
 }

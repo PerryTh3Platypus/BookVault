@@ -1,6 +1,7 @@
 package com.github.perryth3platypus.gui;
 
 import com.github.perryth3platypus.controller.DatabaseConnector;
+import com.github.perryth3platypus.controller.DatabaseController;
 import com.github.perryth3platypus.interfaces.DatabaseConnectorStatusListener;
 
 import javax.swing.*;
@@ -32,7 +33,9 @@ public class DatabaseConnectorFrame extends JFrame implements ActionListener, Da
     *  This can be useful if you want to do changes to all widgets at once, such as changing fonts. */
     ArrayList<JComponent> swingWidgets;
 
-    public DatabaseConnectorFrame(){
+    public DatabaseConnectorFrame(DatabaseConnector dbConnector){
+        this.dbConnector = dbConnector;
+
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Connect to your database");
         monitorSize = Toolkit.getDefaultToolkit();
@@ -157,7 +160,9 @@ public class DatabaseConnectorFrame extends JFrame implements ActionListener, Da
             dbConnector.connect();
             if (dbConnector.testConnection()) {
                 status.append("Connected to BookVault database successfully\n");
-                this.setVisible(false);
+                // connection is successful, therefore spawn main window
+                SwingUtilities.invokeLater(() -> new MainFrame(new DatabaseController(dbConnector)).start());
+                this.setVisible(false); // this window should disappear
             }
             else{
                 status.append("Failed to connect to BookVault database. Invalid database name, invalid credentials, or can't connect to the server");

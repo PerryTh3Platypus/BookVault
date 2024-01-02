@@ -57,16 +57,8 @@ public class DatabaseConnector{ // should probably be singleton
         entityManagerFactoryProperties = new HashMap<>(); // hopefully the jvm garbage collector will destroy that password. Will need to change the way this is done later
 
 
-        entityManager = entityManagerFactory.createEntityManager();
 
-//        if (testConnection())
-//            notifyStatusListeners("Connected to BookVault database at " + entityManagerFactory.getProperties().get("hibernate.connection.url"));
-//        else{
-//            notifyStatusListeners("Failed to connect to BookVault database. Dumping connection properties\n" + entityManagerFactory.getProperties());
-//            entityManagerFactory.close();
-//            entityManagerFactory = null;
-//            return;
-//        }
+        entityManager = entityManagerFactory.createEntityManager();
 
         notifyStatusListeners("Connection established.");
     }

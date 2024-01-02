@@ -1,5 +1,6 @@
 package com.github.perryth3platypus.gui.books;
 
+import com.github.perryth3platypus.controller.DatabaseController;
 import com.github.perryth3platypus.gui.books.add.AddBookMainPanel;
 import com.github.perryth3platypus.gui.books.search.SearchBookMainPanel;
 
@@ -19,7 +20,13 @@ public class BooksTab extends JPanel implements ActionListener {
     private JButton addBookButton;
     private JButton searchBookButton;
 
-    public BooksTab(){
+
+
+    private DatabaseController dbController;
+
+    public BooksTab(DatabaseController dbController){
+        this.dbController = dbController;
+
         this.setLayout(new BorderLayout());
         init();
         addWidgetsToPanel();
@@ -27,8 +34,8 @@ public class BooksTab extends JPanel implements ActionListener {
     }
 
     public void init(){
-        searchBookMainPanel = new SearchBookMainPanel();
-        addBookMainPanel = new AddBookMainPanel();
+        searchBookMainPanel = new SearchBookMainPanel(dbController);
+        addBookMainPanel = new AddBookMainPanel(dbController);
         booksPanel = new JPanel();
         booksPanel.setLayout(new CardLayout());
         booksPanel.add(searchBookMainPanel, "search");
@@ -51,6 +58,10 @@ public class BooksTab extends JPanel implements ActionListener {
     public void bindActionListenerToButtons(){
         addBookButton.addActionListener(this);
         searchBookButton.addActionListener(this);
+    }
+
+    public void setDbController(DatabaseController dbController) {
+        this.dbController = dbController;
     }
 
     @Override

@@ -13,6 +13,7 @@ public class SearchBookResultsPanel extends JPanel {
 
 
     public SearchBookResultsPanel(){
+        //todo: add buttons at the bottom here to modify/delete books that are selected in the results table
         resultsTable = new JTable();
         tableModel = new DefaultTableModel();
         tableModel.setColumnIdentifiers(BooksConstants.FIELDS);

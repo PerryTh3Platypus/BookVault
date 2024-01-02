@@ -1,5 +1,7 @@
 package com.github.perryth3platypus.gui.books.search;
 
+import com.github.perryth3platypus.controller.DatabaseController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,7 +10,11 @@ public class SearchBookMainPanel extends JPanel {
     private SearchBookFieldsPanel searchBookFieldsPanel;
     private SearchBookResultsPanel searchBookResultsPanel;
 
-    public SearchBookMainPanel(){
+    private DatabaseController dbController;
+
+    public SearchBookMainPanel(DatabaseController dbController){
+        this.dbController = dbController;
+
         this.setLayout(new GridBagLayout());
         init();
         addWidgetsToPanel();
@@ -40,5 +46,9 @@ public class SearchBookMainPanel extends JPanel {
         gbc.gridy = 2;
         this.add(searchBookResultsPanel, gbc);
 
+    }
+
+    public void setDbController(DatabaseController dbController) {
+        this.dbController = dbController;
     }
 }
