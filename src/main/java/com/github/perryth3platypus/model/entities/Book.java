@@ -1,9 +1,10 @@
-package com.github.perryth3platypus.model;
+package com.github.perryth3platypus.model.entities;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 @Entity
@@ -51,7 +52,7 @@ public class Book {
     @Column(name = "publisher")
     private String publisher;
 
-    @Column(name = "isbn", nullable = false, length = 13)
+    @Column(name = "isbn", nullable = false)
     private String isbn;
 
     @Column(name = "barcode")
@@ -60,7 +61,7 @@ public class Book {
     @Column(name = "accession_number", unique = true)
     private String accessionNumber;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "location_id")
     private InternalLocation location;
 
@@ -75,12 +76,43 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "patron_id")
     private Patron currentHolder;
 
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
+
+    public HashMap<String, String> dumpAllAttributes(){
+        // keys are the values in BookConstants.FIELDS
+        HashMap<String, String> attributes = new HashMap<>();
+
+        attributes.put("id", Long.toString(bookId));
+        attributes.put("Title", title);
+        attributes.put("Author(s)", author);
+        attributes.put("Subject", subject);
+        attributes.put("Genre", genre);
+        attributes.put("Series", series.getSeriesName());
+        // skip series description for now
+        attributes.put("Volume", volumeNumber);
+        attributes.put("Edition", editionNumber);
+        attributes.put("Country", country);
+        attributes.put("Language", bookLanguage);
+        attributes.put("Release Year", releasedYear);
+        attributes.put("Imprint", imprint);
+        attributes.put("Publisher", publisher);
+        attributes.put("ISBN", isbn);
+        attributes.put("Barcode", barcode);
+        attributes.put("Accession", accessionNumber);
+        attributes.put("Location", location.getLocationName());
+        // skip location description for now
+        //attributes.put("Entry Date", entryDate.toString()); // LocalDate.toString() defaults to this format: yyyy-MM-dd
+        attributes.put("Entry Date", "N/A for now");
+        attributes.put("Status", "N/A for now");
+        attributes.put("Current Holder", "N/A for now"); // patron will have some kind of ID
+        attributes.put("Notes", notes);
+        return attributes;
+    }
 
     public String getTitle() {
         return title;

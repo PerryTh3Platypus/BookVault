@@ -1,4 +1,4 @@
-package com.github.perryth3platypus.model;
+package com.github.perryth3platypus.model.entities;
 
 import jakarta.persistence.*;
 
