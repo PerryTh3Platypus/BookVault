@@ -5,12 +5,12 @@
 
     <persistence-unit name="BookVaultPU" transaction-type="RESOURCE_LOCAL">
         <!-- Entity classes -->
-        <class>com.github.perryth3platypus.model.Librarian</class>
-        <class>com.github.perryth3platypus.model.Book</class>
-        <class>com.github.perryth3platypus.model.Patron</class>
-        <class>com.github.perryth3platypus.model.InternalLocation</class>
-        <class>com.github.perryth3platypus.model.Series</class>
-        <class>com.github.perryth3platypus.model.Borrow</class>
+        <class>com.github.perryth3platypus.model.entities.Librarian</class>
+        <class>com.github.perryth3platypus.model.entities.Book</class>
+        <class>com.github.perryth3platypus.model.entities.Patron</class>
+        <class>com.github.perryth3platypus.model.entities.InternalLocation</class>
+        <class>com.github.perryth3platypus.model.entities.Series</class>
+        <class>com.github.perryth3platypus.model.entities.Borrow</class>
 
         <!-- Data source configuration -->
         <properties>
