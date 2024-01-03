@@ -44,8 +44,8 @@ public class MainFrame extends JFrame{
         init();
         addTabsToTabbedPane();
         addWidgetsToPanel();
-        this.setSize(1600, 900);
-        this.setTitle("This is the MainFrame");
+        this.setSize(1600, 900); //todo: make this dynamic
+        this.setTitle("BookVault");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.getContentPane().add(BorderLayout.CENTER, mainPanel);
         this.setVisible(true);
