@@ -1,10 +1,9 @@
 package com.github.perryth3platypus.gui.books.add;
 
-import com.github.perryth3platypus.controller.DatabaseConnector;
 import com.github.perryth3platypus.controller.DatabaseController;
-import com.github.perryth3platypus.model.Book;
-import com.github.perryth3platypus.model.InternalLocation;
-import com.github.perryth3platypus.model.Series;
+import com.github.perryth3platypus.model.entities.Book;
+import com.github.perryth3platypus.model.entities.InternalLocation;
+import com.github.perryth3platypus.model.entities.Series;
 
 import javax.swing.*;
 
