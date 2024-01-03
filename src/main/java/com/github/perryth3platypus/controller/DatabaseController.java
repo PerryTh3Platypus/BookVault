@@ -1,15 +1,15 @@
 package com.github.perryth3platypus.controller;
 
-import com.github.perryth3platypus.gui.books.BooksConstants;
-import com.github.perryth3platypus.model.Book;
-import jakarta.persistence.EntityManager;
+import com.github.perryth3platypus.model.entities.Book;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseController {
     public enum CRUDOperation{
@@ -35,16 +35,28 @@ public class DatabaseController {
         }
     }
 
-    public List<Book> loadBooks(String title, String searchField1, String searchTerm1, String searchField2, String searchTerm2, String searchField3, String searchTerm3){
-        //todo: update this method later
+
+
+
+    public <T> List<T> readEntities(Class<T> entityType, Map<String, String> searchConditions){
+        // Map<String, String> searchConditions will have key = entity attribute name, value = entity attribute value you want to search for
+
         CriteriaBuilder criteriaBuilder = dbConnector.getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<Book> bookCriteriaQuery = criteriaBuilder.createQuery(Book.class);
-        Root<Book> bookRoot = bookCriteriaQuery.from(Book.class);
 
-        Predicate searchPredicate = criteriaBuilder.like(bookRoot.get(BooksConstants.ATTRIBUTE_MAP.get(searchField1)), "%" + searchTerm1.toLowerCase() + "%");
-        bookCriteriaQuery.where(searchPredicate);
 
-        return dbConnector.getEntityManager().createQuery(bookCriteriaQuery).getResultList();
+        CriteriaQuery<T> entityCriteriaQuery = criteriaBuilder.createQuery(entityType);
+        Root<T> entityRoot = entityCriteriaQuery.from(entityType);
+
+        ArrayList<Predicate> searchPredicates = new ArrayList<>();
+        for (Map.Entry<String, String> searchCondition : searchConditions.entrySet()){
+            Predicate searchPredicate = criteriaBuilder.like(entityRoot.get(searchCondition.getKey()), "%" + searchCondition.getValue() + "%");
+            searchPredicates.add(searchPredicate);
+        }
+
+        Predicate finalPredicate = criteriaBuilder.and(searchPredicates.toArray(new Predicate[0]));
+        entityCriteriaQuery.where(finalPredicate);
+
+        return dbConnector.getEntityManager().createQuery(entityCriteriaQuery).getResultList();
     }
 
     public boolean performCRUDOperation(Object object, CRUDOperation operation){
