@@ -5,6 +5,7 @@ import com.github.perryth3platypus.gui.books.BooksConstants;
 import com.github.perryth3platypus.model.entities.Book;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,13 +15,16 @@ public class SearchBookMainPanel extends JPanel implements ActionListener {
     private SearchBookFieldsPanel searchBookFieldsPanel;
     private SearchBookResultsPanel searchBookResultsPanel;
     private JButton searchButton;
+    private JButton editButton;
+    private JButton deleteButton;
+    private JPanel buttonsPanel;
 
     private DatabaseController dbController;
 
     public SearchBookMainPanel(DatabaseController dbController){
         this.dbController = dbController;
 
-        this.setLayout(new GridBagLayout());
+        this.setLayout(new BorderLayout());
         init();
         addWidgetsToPanel();
         bindActionListenersToButtons();
@@ -29,30 +33,21 @@ public class SearchBookMainPanel extends JPanel implements ActionListener {
     public void init(){
         searchBookFieldsPanel = new SearchBookFieldsPanel();
         searchBookResultsPanel = new SearchBookResultsPanel();
+
         searchButton = new JButton("Search");
+        editButton = new JButton("Edit");
+        deleteButton = new JButton("Delete");
+        buttonsPanel = new JPanel();
+        buttonsPanel.add(deleteButton);
+        buttonsPanel.add(editButton);
+        buttonsPanel.add(searchButton);
+
     }
 
     public void addWidgetsToPanel(){
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(3,3,3,3);
-        // make widgets center in the middle and let them expand horizontally
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.weightx = 1.0d;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        this.add(searchBookFieldsPanel, gbc);
-
-        gbc.weighty = 1.0d;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridy = 1;
-        this.add(searchBookResultsPanel, gbc);
-
-        gbc.weightx = 0;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.gridy = 2;
-        this.add(searchButton, gbc);
+        this.add(BorderLayout.NORTH, searchBookFieldsPanel);
+        this.add(BorderLayout.CENTER ,searchBookResultsPanel);
+        this.add(BorderLayout.SOUTH ,buttonsPanel);
 
     }
 
