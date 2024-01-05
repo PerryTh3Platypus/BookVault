@@ -2,6 +2,8 @@ package com.github.perryth3platypus.gui.books.search;
 
 import com.github.perryth3platypus.controller.DatabaseController;
 import com.github.perryth3platypus.gui.books.BooksConstants;
+import com.github.perryth3platypus.gui.books.edit.EditBookMainPanel;
+import com.github.perryth3platypus.model.cache.EntityCache;
 import com.github.perryth3platypus.model.entities.Book;
 
 import javax.swing.*;
@@ -15,7 +17,10 @@ public class SearchBookMainPanel extends JPanel implements ActionListener {
     private SearchBookFieldsPanel searchBookFieldsPanel;
     private SearchBookResultsPanel searchBookResultsPanel;
     private JButton searchButton;
+
     private JButton editButton;
+    private EditBookMainPanel editBookMainPanel;
+
     private JButton deleteButton;
     private JPanel buttonsPanel;
 
@@ -41,7 +46,7 @@ public class SearchBookMainPanel extends JPanel implements ActionListener {
         buttonsPanel.add(deleteButton);
         buttonsPanel.add(editButton);
         buttonsPanel.add(searchButton);
-
+        editBookMainPanel = new EditBookMainPanel(dbController);
     }
 
     public void addWidgetsToPanel(){
@@ -53,6 +58,7 @@ public class SearchBookMainPanel extends JPanel implements ActionListener {
 
     private void bindActionListenersToButtons(){
         searchButton.addActionListener(this);
+        editButton.addActionListener(this);
     }
 
     public void setDbController(DatabaseController dbController) {
@@ -62,8 +68,28 @@ public class SearchBookMainPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchButton){
-            ArrayList<Book> books = (ArrayList<Book>) dbController.readEntities(Book.class, searchBookFieldsPanel.getSearchConditions());
-            searchBookResultsPanel.updateTableModel(books);
+            // read books from database and put them inside the cache
+            EntityCache.generateBookCache(dbController.readEntities(Book.class, searchBookFieldsPanel.getSearchConditions()));
+            searchBookResultsPanel.updateTableModel(EntityCache.bookCache.values().stream().toList());
+        }
+
+        if (e.getSource() == editButton){
+            // gets row index from the table
+            int selectedRow = searchBookResultsPanel.getResultsTable().getSelectedRow();
+            // gets row index from the model, this is the correct index of the row because someone might sort by a column
+            int actuallySelectedRow = searchBookResultsPanel.getResultsTable().convertRowIndexToModel(selectedRow);
+            int bookId = Integer.parseInt(searchBookResultsPanel.getTableModel().getValueAt(actuallySelectedRow, 0).toString());
+            Book bookToEdit = EntityCache.bookCache.get(bookId);
+
+            // get the most up-to-date version of the entity before attempting to edit it
+            dbController.refreshEntity(bookToEdit);
+
+            System.out.println("Starting book editing operation");
+            System.out.println("Editing book with id: " + bookId);
+            System.out.println("and name: " + bookToEdit.getTitle());
+            editBookMainPanel.editBook(bookToEdit);
+
+
         }
     }
 }
