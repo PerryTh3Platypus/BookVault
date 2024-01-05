@@ -1,5 +1,6 @@
 package com.github.perryth3platypus.model.entities;
 
+import com.github.perryth3platypus.interfaces.EntityChangeListener;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name = "book_id")
-    private long bookId;
+    private int bookId;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -83,9 +84,27 @@ public class Book {
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 
+    @Transient
+    private ArrayList<EntityChangeListener> observers = new ArrayList<>();
+
+    private void notifyObservers(EntityChangeListener.EVENT event){
+        if (event == EntityChangeListener.EVENT.UPDATE){
+            for (EntityChangeListener observer : observers){
+                observer.entityChangeOccurred(this, EntityChangeListener.EVENT.UPDATE);
+            }
+        }
+        if (event == EntityChangeListener.EVENT.DELETE)
+            System.out.println("do something on book delete");
+    }
+
+    public void subscribeAsObserver(EntityChangeListener observer){
+        observers.add(observer);
+    }
+
     public HashMap<String, String> dumpAllAttributes(){
         // keys are the values in BookConstants.FIELDS
         HashMap<String, String> attributes = new HashMap<>();
+        //this will cause a bug, when you order numbers in the results table by string
 
         attributes.put("id", Long.toString(bookId));
         attributes.put("Title", title);
@@ -114,12 +133,17 @@ public class Book {
         return attributes;
     }
 
+    public int getBookId() {
+        return bookId;
+    }
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getAuthor() {
@@ -128,6 +152,7 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getSubject() {
@@ -136,6 +161,7 @@ public class Book {
 
     public void setSubject(String subject) {
         this.subject = subject;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getGenre() {
@@ -144,6 +170,7 @@ public class Book {
 
     public void setGenre(String genre) {
         this.genre = genre;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public Series getSeries() {
@@ -152,6 +179,7 @@ public class Book {
 
     public void setSeries(Series series) {
         this.series = series;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getVolumeNumber() {
@@ -160,6 +188,7 @@ public class Book {
 
     public void setVolumeNumber(String volumeNumber) {
         this.volumeNumber = volumeNumber;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getEditionNumber() {
@@ -168,6 +197,7 @@ public class Book {
 
     public void setEditionNumber(String editionNumber) {
         this.editionNumber = editionNumber;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getCountry() {
@@ -176,6 +206,7 @@ public class Book {
 
     public void setCountry(String country) {
         this.country = country;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getBookLanguage() {
@@ -184,6 +215,7 @@ public class Book {
 
     public void setBookLanguage(String bookLanguage) {
         this.bookLanguage = bookLanguage;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getReleasedYear() {
@@ -192,6 +224,7 @@ public class Book {
 
     public void setReleasedYear(String releasedYear) {
         this.releasedYear = releasedYear;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getImprint() {
@@ -200,6 +233,7 @@ public class Book {
 
     public void setImprint(String imprint) {
         this.imprint = imprint;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getPublisher() {
@@ -208,6 +242,7 @@ public class Book {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getIsbn() {
@@ -216,6 +251,7 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getBarcode() {
@@ -224,6 +260,7 @@ public class Book {
 
     public void setBarcode(String barcode) {
         this.barcode = barcode;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getAccessionNumber() {
@@ -232,6 +269,7 @@ public class Book {
 
     public void setAccessionNumber(String accessionNumber) {
         this.accessionNumber = accessionNumber;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public InternalLocation getLocation() {
@@ -240,6 +278,7 @@ public class Book {
 
     public void setLocation(InternalLocation location) {
         this.location = location;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public LocalDateTime getEntryDate() {
@@ -248,6 +287,7 @@ public class Book {
 
     public void setEntryDate(LocalDateTime entryDate) {
         this.entryDate = entryDate;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public Status getStatus() {
@@ -256,6 +296,7 @@ public class Book {
 
     public void setStatus(Status status) {
         this.status = status;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public Patron getCurrentHolder() {
@@ -264,6 +305,7 @@ public class Book {
 
     public void setCurrentHolder(Patron currentHolder) {
         this.currentHolder = currentHolder;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 
     public String getNotes() {
@@ -272,5 +314,6 @@ public class Book {
 
     public void setNotes(String notes) {
         this.notes = notes;
+        notifyObservers(EntityChangeListener.EVENT.UPDATE);
     }
 }
