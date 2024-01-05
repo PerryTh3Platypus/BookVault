@@ -77,4 +77,8 @@ public class DatabaseController {
             return false;
         }
     }
+
+    public void refreshEntity(Object object){
+        dbConnector.getEntityManager().refresh(object);
+    }
 }
