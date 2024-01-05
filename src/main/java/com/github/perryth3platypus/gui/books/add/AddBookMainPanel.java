@@ -13,10 +13,10 @@ import java.awt.event.ActionListener;
 
 public class AddBookMainPanel extends JPanel implements ActionListener {
     /* Panel that will be used for adding books and persisting them to db */
-    private AddBookFormPanel addBookFormPanel;
-    private JButton saveBookButton;
+    protected AddBookFormPanel addBookFormPanel;
+    protected JButton saveBookButton;
 
-    private DatabaseController dbController;
+    protected DatabaseController dbController;
 
     public AddBookMainPanel(DatabaseController dbController){
         this.dbController = dbController;
@@ -63,6 +63,7 @@ public class AddBookMainPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveBookButton){
+            //todo: rewrite this later
             Book book = new Book();
             book.setTitle(addBookFormPanel.getTitleTextField().getText());
             book.setAuthor(addBookFormPanel.getAuthorTextField().getText());
