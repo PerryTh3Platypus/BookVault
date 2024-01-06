@@ -20,7 +20,13 @@ public class SearchBookResultsPanel extends JPanel implements EntityChangeListen
     public SearchBookResultsPanel(){
         //todo: add buttons at the bottom here to modify/delete books that are selected in the results table
         resultsTable = new JTable();
-        tableModel = new DefaultTableModel();
+        tableModel =  new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Make all cells non-editable
+                return false;
+            }
+        };
         tableModel.setColumnIdentifiers(BooksConstants.FIELDS);
         resultsTable.setModel(tableModel);
         resultsTable.setAutoCreateRowSorter(true);
