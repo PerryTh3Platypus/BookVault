@@ -36,6 +36,7 @@ public class BooksTab extends JPanel implements ActionListener {
     public void init(){
         searchBookMainPanel = new SearchBookMainPanel(dbController);
         addBookMainPanel = new AddBookMainPanel(dbController);
+        addBookMainPanel.start();
         booksPanel = new JPanel();
         booksPanel.setLayout(new CardLayout());
         booksPanel.add(searchBookMainPanel, "search");
