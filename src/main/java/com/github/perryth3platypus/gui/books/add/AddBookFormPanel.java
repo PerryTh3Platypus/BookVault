@@ -1,13 +1,19 @@
 package com.github.perryth3platypus.gui.books.add;
 
+import com.github.perryth3platypus.interfaces.ValidEntityListener;
+
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class AddBookFormPanel extends JPanel {
+public class AddBookFormPanel extends JPanel implements DocumentListener {
     // holds the form for adding books to db (asks for title, author, genre etc)
     private ArrayList<JLabel> labels;
     private ArrayList<JTextField> textFields;
+    private ArrayList<JTextField> mandatoryTextFields;
 
     private JLabel titleLabel;
     private JTextField titleTextField;
@@ -44,27 +50,31 @@ public class AddBookFormPanel extends JPanel {
     private JLabel notesLabel;
     private JTextField notesTextField;
 
+    private LineBorder redLineBorder;
+
+    private ValidEntityListener validEntityListener;
+
     public AddBookFormPanel(){
         labels = new ArrayList<>();
         textFields = new ArrayList<>();
+        mandatoryTextFields = new ArrayList<>();
 
         this.setLayout(new GridBagLayout());
-
-        init();
-        addWidgetsToPanel();
     }
 
     public void init(){
         //todo: some of these arent mandatory to be filled, find a way to show that in gui
-        titleLabel = new JLabel("Title: ");
+        titleLabel = new JLabel("Title * : ");
         labels.add(titleLabel);
         titleTextField = new JTextField();
         textFields.add(titleTextField);
+        mandatoryTextFields.add(titleTextField);
 
-        authorLabel = new JLabel("Author(s): ");
+        authorLabel = new JLabel("Author(s) * : ");
         labels.add(authorLabel);
         authorTextField = new JTextField();
         textFields.add(authorTextField);
+        mandatoryTextFields.add(authorTextField);
 
         subjectLabel = new JLabel("Subject: ");
         labels.add(subjectLabel);
@@ -96,15 +106,17 @@ public class AddBookFormPanel extends JPanel {
         countryTextField = new JTextField();
         textFields.add(countryTextField);
 
-        bookLanguageLabel = new JLabel("Language");
+        bookLanguageLabel = new JLabel("Language * ");
         labels.add(bookLanguageLabel);
         bookLanguageTextField = new JTextField();
         textFields.add(bookLanguageTextField);
+        mandatoryTextFields.add(bookLanguageTextField);
 
-        releasedYearLabel = new JLabel("Released year: ");
+        releasedYearLabel = new JLabel("Released year * : ");
         labels.add(releasedYearLabel);
         releasedYearTextField = new JTextField();
         textFields.add(releasedYearTextField);
+        mandatoryTextFields.add(releasedYearTextField);
 
         imprintLabel = new JLabel("Imprint: ");
         labels.add(imprintLabel);
@@ -116,20 +128,22 @@ public class AddBookFormPanel extends JPanel {
         publisherTextField = new JTextField();
         textFields.add(publisherTextField);
 
-        isbnLabel = new JLabel("ISBN: ");
+        isbnLabel = new JLabel("ISBN * : ");
         labels.add(isbnLabel);
         isbnTextField = new JTextField();
         textFields.add(isbnTextField);
+        mandatoryTextFields.add(isbnTextField);
 
         barcodeLabel = new JLabel("Barcode: ");
         labels.add(barcodeLabel);
         barcodeTextField = new JTextField();
         textFields.add(barcodeTextField);
 
-        accessionNumberLabel = new JLabel("Accession: ");
+        accessionNumberLabel = new JLabel("Accession * : ");
         labels.add(accessionNumberLabel);
         accessionNumberTextField = new JTextField();
         textFields.add(accessionNumberTextField);
+        mandatoryTextFields.add(accessionNumberTextField);
 
         locationLabel = new JLabel("Location: ");
         labels.add(locationLabel);
@@ -141,6 +155,7 @@ public class AddBookFormPanel extends JPanel {
         notesTextField = new JTextField();
         textFields.add(notesTextField);
 
+        redLineBorder = new LineBorder(new Color(0xFF0000));
     }
 
     public void addWidgetsToPanel(){
@@ -173,6 +188,40 @@ public class AddBookFormPanel extends JPanel {
         }
     }
 
+    public void bindDocumentListenersToTextFields(){
+        for (JTextField textField : textFields)
+            textField.getDocument().addDocumentListener(this);
+    }
+
+    public void checkBookFieldsForValidity(){
+        boolean isValid = true;
+        for (JTextField textField : textFields){
+            if (textField.getText().length() > 255){
+                textField.setBorder(redLineBorder);
+                isValid = false;
+            }
+            else{
+                textField.setBorder(null);
+            }
+        }
+        for (JTextField mandatoryTextField : mandatoryTextFields){
+            if (mandatoryTextField.getText().isEmpty()){
+                mandatoryTextField.setBorder(redLineBorder);
+                isValid = false;
+            }
+            else{
+                mandatoryTextField.setBorder(null);
+            }
+        }
+        validEntityListener.entityIsValid(isValid);
+    }
+
+    public void start(){
+        init();
+        addWidgetsToPanel();
+        bindDocumentListenersToTextFields();
+        checkBookFieldsForValidity();
+    }
     public ArrayList<JLabel> getLabels() {
         return labels;
     }
@@ -315,5 +364,24 @@ public class AddBookFormPanel extends JPanel {
 
     public JTextField getNotesTextField() {
         return notesTextField;
+    }
+
+    public void setValidEntityListener(ValidEntityListener validEntityListener) {
+        this.validEntityListener = validEntityListener;
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        checkBookFieldsForValidity();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        checkBookFieldsForValidity();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+
     }
 }

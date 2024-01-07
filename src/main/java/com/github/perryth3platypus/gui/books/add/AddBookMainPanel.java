@@ -1,6 +1,7 @@
 package com.github.perryth3platypus.gui.books.add;
 
 import com.github.perryth3platypus.controller.DatabaseController;
+import com.github.perryth3platypus.interfaces.ValidEntityListener;
 import com.github.perryth3platypus.model.entities.Book;
 import com.github.perryth3platypus.model.entities.InternalLocation;
 import com.github.perryth3platypus.model.entities.Series;
@@ -11,25 +12,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddBookMainPanel extends JPanel implements ActionListener {
+public class AddBookMainPanel extends JPanel implements ActionListener, ValidEntityListener {
     /* Panel that will be used for adding books and persisting them to db */
     protected AddBookFormPanel addBookFormPanel;
     protected JButton saveBookButton;
 
     protected DatabaseController dbController;
 
+
+
     public AddBookMainPanel(DatabaseController dbController){
         this.dbController = dbController;
 
         this.setLayout(new GridBagLayout());
-        init();
-        addWidgetsToPanel();
-        bindActionListenerToButtons();
+
     }
 
     public void init(){
         addBookFormPanel = new AddBookFormPanel();
         saveBookButton = new JButton("Add Book");
+        saveBookButton.setEnabled(false);
     }
 
     public void addWidgetsToPanel(){
@@ -50,15 +52,28 @@ public class AddBookMainPanel extends JPanel implements ActionListener {
         this.add(saveBookButton, gbc);
     }
 
+    public void start(){
+        init();
+        addWidgetsToPanel();
+        bindActionListenerToButtons();
+
+        addBookFormPanel.setValidEntityListener(this);
+        addBookFormPanel.start();
+    }
+
     public void bindActionListenerToButtons(){
         saveBookButton.addActionListener(this);
     }
-
 
     public void setDbController(DatabaseController dbController) {
         this.dbController = dbController;
     }
 
+    protected void bookAdditionSuccess(){
+        // shows a dialogue info msg and clears text fields
+        JOptionPane.showMessageDialog(this, "Book successfully added", "Book Addition", JOptionPane.INFORMATION_MESSAGE);
+        addBookFormPanel.getTextFields().forEach(tf -> tf.setText(""));
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -93,6 +108,12 @@ public class AddBookMainPanel extends JPanel implements ActionListener {
             dbController.performCRUDOperation(internalLocation, DatabaseController.CRUDOperation.CREATE);
             dbController.performCRUDOperation(book, DatabaseController.CRUDOperation.CREATE);
             //todo: error checks here
+            bookAdditionSuccess();
         }
+    }
+
+    @Override
+    public void entityIsValid(boolean entityStatus) {
+        saveBookButton.setEnabled(entityStatus);
     }
 }
