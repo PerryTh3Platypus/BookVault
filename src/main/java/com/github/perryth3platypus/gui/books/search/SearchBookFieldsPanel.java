@@ -1,9 +1,11 @@
 package com.github.perryth3platypus.gui.books.search;
 
 import com.github.perryth3platypus.gui.books.BooksConstants;
+import org.checkerframework.checker.units.qual.A;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,13 +103,35 @@ public class SearchBookFieldsPanel extends JPanel {
         return searchComboBox1;
     }
 
-    public Map<String, String> getSearchConditions(){
-        HashMap<String, String> searchConditions = new HashMap<>();
+    public Map<String, ArrayList<String>> getSearchConditions(){
+        /* the key of this map is the search condition (for example title)
+        *  the value of this map is a list of arguments for said condition (for example, you could have the condition
+        * being title, and the arguments 2 titles for an OR search)*/
+        HashMap<String, ArrayList<String>> searchConditions = new HashMap<>();
+        // this loop iterates through every combo box (with its selected option) and text field
         for (Map.Entry<JComboBox<String>, JTextField> searchFields : searchFieldMap.entrySet()){
+            /* map the GUI-friendly string option in the combo box to the name of the attribute, because hibernate
+            *  needs that to be able to search*/
             String searchCriteria = BooksConstants.ATTRIBUTE_MAP.get(searchFields.getKey().getSelectedItem().toString());
-            String searchValue = searchFields.getValue().getText();
-            if (searchValue != null && !searchValue.isEmpty())
-                searchConditions.put(searchCriteria, searchValue);
+            // get the text from the corresponding text field
+            String searchArg = searchFields.getValue().getText();
+            // if there is text in the text field
+            if (!searchArg.isEmpty()) {
+                // check if there is an entry for this search criteria in what we're gonna return
+                // if there is no entry for this criteria
+                if (searchConditions.get(searchCriteria) == null){
+                    // create the list of arguments
+                    ArrayList<String> searchArgs = new ArrayList<>();
+                    // add the first argument to the list
+                    searchArgs.add(searchArg);
+                    // put the criteria (title, author, other..) in the return value with this list of arguments
+                    searchConditions.put(searchCriteria, searchArgs);
+                }
+                // if there is already an entry for the criteria
+                else
+                    // then get the list of arguments and add this argument to it (e.g. this is the second title arg)
+                    searchConditions.get(searchCriteria).add(searchArg);
+            }
         }
         return searchConditions;
     }

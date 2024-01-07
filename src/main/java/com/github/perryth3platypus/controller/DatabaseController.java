@@ -15,6 +15,9 @@ public class DatabaseController {
     public enum CRUDOperation{
         CREATE, UPDATE, DELETE
     }
+    public enum SearchType{
+        AND, OR
+    }
 
     private DatabaseConnector dbConnector;
 
@@ -38,7 +41,7 @@ public class DatabaseController {
 
 
 
-    public <T> List<T> readEntities(Class<T> entityType, Map<String, String> searchConditions){
+    public <T> List<T> readEntities(Class<T> entityType, Map<String, ArrayList<String>> searchConditions, SearchType searchType){
         // Map<String, String> searchConditions will have key = entity attribute name, value = entity attribute value you want to search for
 
         CriteriaBuilder criteriaBuilder = dbConnector.getEntityManager().getCriteriaBuilder();
@@ -48,12 +51,19 @@ public class DatabaseController {
         Root<T> entityRoot = entityCriteriaQuery.from(entityType);
 
         ArrayList<Predicate> searchPredicates = new ArrayList<>();
-        for (Map.Entry<String, String> searchCondition : searchConditions.entrySet()){
-            Predicate searchPredicate = criteriaBuilder.like(entityRoot.get(searchCondition.getKey()), "%" + searchCondition.getValue() + "%");
-            searchPredicates.add(searchPredicate);
+        for (Map.Entry<String, ArrayList<String>> searchCondition : searchConditions.entrySet()){
+            for (String searchArg : searchCondition.getValue()) {
+                Predicate searchPredicate = criteriaBuilder.like(entityRoot.get(searchCondition.getKey()), "%" + searchArg + "%");
+                searchPredicates.add(searchPredicate);
+            }
         }
 
-        Predicate finalPredicate = criteriaBuilder.and(searchPredicates.toArray(new Predicate[0]));
+        Predicate finalPredicate;
+
+        if (searchType == SearchType.AND)
+            finalPredicate = criteriaBuilder.and(searchPredicates.toArray(new Predicate[0]));
+        else
+            finalPredicate = criteriaBuilder.or(searchPredicates.toArray(new Predicate[0]));
         entityCriteriaQuery.where(finalPredicate);
 
         return dbConnector.getEntityManager().createQuery(entityCriteriaQuery).getResultList();
