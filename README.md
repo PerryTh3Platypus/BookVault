@@ -7,4 +7,6 @@
 - search book function
 ![Search_func](screenshots/bookvault-search_book.png)
 - edit book function
-![Search_func](screenshots/bookvault-edit_book.png)
+![Edit_func](screenshots/bookvault-edit_book.png)
+- add book function
+![Add_Func](screenshots/bookvault-add_book.png)
