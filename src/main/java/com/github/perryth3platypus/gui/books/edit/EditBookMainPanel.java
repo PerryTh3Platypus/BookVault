@@ -17,12 +17,12 @@ public class EditBookMainPanel extends AddBookMainPanel implements ActionListene
 
     public EditBookMainPanel(DatabaseController dbController) {
         super(dbController);
-        saveBookButton.setText("Save");
     }
 
     @Override
     public void init() {
         super.init();
+        saveBookButton.setText("Save");
         editBookFrame = new JFrame();
         editBookFrame.getContentPane().add(BorderLayout.CENTER, this);
         editBookFrame.setLocationRelativeTo(null);
