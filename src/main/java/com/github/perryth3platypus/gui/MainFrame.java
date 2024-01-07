@@ -17,6 +17,8 @@ public class MainFrame extends JFrame{
 
     private BooksTab booksTab;
 
+    private MenuBar menuBar;
+
 
 
     private DatabaseController dbController;
@@ -30,6 +32,7 @@ public class MainFrame extends JFrame{
         mainPanel.setLayout(new BorderLayout());
         tabs = new JTabbedPane();
         booksTab = new BooksTab(dbController);
+        menuBar = new MenuBar();
     }
 
     private void addTabsToTabbedPane(){
@@ -38,6 +41,7 @@ public class MainFrame extends JFrame{
 
     private void addWidgetsToPanel(){
         mainPanel.add(BorderLayout.CENTER, tabs);
+        this.setJMenuBar(menuBar);
     }
 
     public void start(){
