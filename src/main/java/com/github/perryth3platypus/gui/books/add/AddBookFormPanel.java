@@ -101,12 +101,12 @@ public class AddBookFormPanel extends JPanel implements DocumentListener {
         editionNumberTextField = new JTextField();
         textFields.add(editionNumberTextField);
 
-        countryLabel = new JLabel("Country");
+        countryLabel = new JLabel("Country: ");
         labels.add(countryLabel);
         countryTextField = new JTextField();
         textFields.add(countryTextField);
 
-        bookLanguageLabel = new JLabel("Language * ");
+        bookLanguageLabel = new JLabel("Language * :");
         labels.add(bookLanguageLabel);
         bookLanguageTextField = new JTextField();
         textFields.add(bookLanguageTextField);
