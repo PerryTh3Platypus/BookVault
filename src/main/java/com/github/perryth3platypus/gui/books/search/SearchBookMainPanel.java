@@ -47,6 +47,7 @@ public class SearchBookMainPanel extends JPanel implements ActionListener {
         buttonsPanel.add(editButton);
         buttonsPanel.add(searchButton);
         editBookMainPanel = new EditBookMainPanel(dbController);
+        editBookMainPanel.start();
     }
 
     public void addWidgetsToPanel(){
@@ -88,8 +89,6 @@ public class SearchBookMainPanel extends JPanel implements ActionListener {
             System.out.println("Editing book with id: " + bookId);
             System.out.println("and name: " + bookToEdit.getTitle());
             editBookMainPanel.editBook(bookToEdit);
-
-
         }
     }
 }
